@@ -17,18 +17,18 @@ Se il tuo client non trova la skill dopo l'installazione, per prima cosa control
 
 ### 1. Ottieni i file della skill
 
-Questo repo non ha (ancora) un URL remoto pubblico: per ora i comandi sotto vanno adattati al percorso locale del repo, oppure copia direttamente la cartella. Una volta pubblicato su un host Git (GitHub, GitLab, ecc.), sostituisci `<url-o-percorso-di-questo-repo>` con l'URL reale.
+Il repo è pubblico su GitHub: https://github.com/Samuel88/code-comprehension-check-skill
 
 Con submodule (Git, versione tracciata e aggiornabile):
 
 ```bash
-git submodule add <url-o-percorso-di-questo-repo> <directory-skill-del-client>/code-comprehension-check
+git submodule add https://github.com/Samuel88/code-comprehension-check-skill.git <directory-skill-del-client>/code-comprehension-check
 ```
 
-Senza submodule (copia semplice):
+Senza submodule (copia semplice, ultima release taggata):
 
 ```bash
-git clone <url-o-percorso-di-questo-repo> /tmp/ccc
+git clone --branch v1.0.0 https://github.com/Samuel88/code-comprehension-check-skill.git /tmp/ccc
 cp -r /tmp/ccc/* <directory-skill-del-client>/code-comprehension-check/
 ```
 
