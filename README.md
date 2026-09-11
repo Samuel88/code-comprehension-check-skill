@@ -31,23 +31,7 @@ Sostituisci `claude-code` con l'agente che usi (es. `opencode`), oppure ometti `
 
 ⚠️ Il tool stesso lo ricorda a fine installazione: rivedi sempre il contenuto di una skill prima di usarla, perché viene eseguita con i permessi pieni del tuo agente.
 
-### 2. Installazione rapida via agente
-
-Se il tuo client AI ha accesso a shell/file system ma preferisci non installare un CLI aggiuntivo, incollagli questo prompt e lascia che faccia tutto da solo:
-
-```
-Installa la Agent Skill "code-comprehension-check" dal repository
-https://github.com/Samuel88/code-comprehension-check-skill (tag v1.0.0):
-determina quale directory delle skill usi tu come agente in questo progetto
-(es. .agents/skills/ o .claude/skills/), clona/scarica lì dentro una
-sottocartella "code-comprehension-check" contenente SKILL.md e la cartella
-references/ dal repo indicato, poi conferma che la skill compare nel tuo
-elenco di skill disponibili.
-```
-
-Il prompt punta deliberatamente al tag `v1.0.0` (non a `main`) per un'installazione riproducibile, copia solo `SKILL.md` e `references/` (non `README.md`/`CHANGELOG.md`, che sono metadati del repo e non fanno parte della skill secondo la spec), e lascia che sia l'agente a determinare la propria directory di default invece di fissarla tu — varia da client a client (vedi punto 0).
-
-### 3. In alternativa: comandi manuali
+### 2. In alternativa: comandi manuali
 
 Il repo è pubblico su GitHub: https://github.com/Samuel88/code-comprehension-check-skill
 
@@ -66,7 +50,7 @@ cp -r /tmp/ccc/* <directory-skill-del-client>/code-comprehension-check/
 
 Sostituisci `<directory-skill-del-client>` con quella del punto 0 (es. `.agents/skills` oppure `.claude/skills`).
 
-### 4. Verifica che sia stata caricata
+### 3. Verifica che sia stata caricata
 
 Il meccanismo varia per client, ma in generale: riavvia/ricarica la sessione dell'agente (le skill vengono scoperte all'avvio) e controlla l'elenco delle skill disponibili — in VS Code/Copilot digita `/skills` in chat, in Claude Code la skill compare nell'elenco `<system-reminder>` delle skill disponibili o puoi chiedere direttamente "quali skill hai a disposizione?".
 
