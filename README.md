@@ -5,14 +5,37 @@ Agent Skill conforme allo standard [agentskills.io](https://agentskills.io/speci
 ## Installazione
 
 ```bash
-npx skills add Samuel88/code-comprehension-check-skill -a claude-code -y
+npx skills add Samuel88/code-comprehension-check-skill -a <agente> -y --copy
 # oppure con pnpm:
-pnpm dlx skills add Samuel88/code-comprehension-check-skill -a claude-code -y
+pnpm dlx skills add Samuel88/code-comprehension-check-skill -a <agente> -y --copy
 ```
 
-Sostituisci `claude-code` con l'agente che usi (es. `opencode`), oppure ometti `-a` per scegliere interattivamente. Il comando rileva da solo la directory giusta per l'agente scelto e crea uno `skills-lock.json` per tracciare la versione installata.
+Cosa fa questo comando, in ordine:
+
+1. Clona il repo e trova `code-comprehension-check/SKILL.md` al suo interno.
+2. Copia la skill nella directory giusta **per l'agente che indichi con `-a`** — ad esempio `-a claude-code` installa in `.claude/skills/`, `-a opencode` in `.opencode/skills/`. Se usi un client che segue lo standard senza una directory propria (o vuoi un'installazione portabile tra più client), usa `-a universal`: installa nel percorso standard `.agents/skills/`.
+3. Ometti `-a` per farti chiedere interattivamente quale agente scegliere tra quelli rilevati nel progetto.
+4. Crea (o aggiorna) uno **`skills-lock.json`** nella root del progetto, che traccia quali skill sono installate e da dove — è quello che permette poi a `skills update` di funzionare. Vedi la sezione sotto se il progetto ne ha già uno.
+
+`--copy` forza una copia reale dei file invece di un symlink (comportamento di default) — più semplice da capire e da versionare per chi non ha familiarità con i symlink, consigliato soprattutto in ambito didattico.
 
 ⚠️ Rivedi sempre il contenuto di una skill prima di usarla: viene eseguita con i permessi pieni del tuo agente.
+
+> **Nota:** se il progetto in cui installi ha un `package.json` con `devEngines.packageManager` impostato (es. forza `pnpm`), `npx` può fallire con un errore `EBADDEVENGINES` perché rispetta quel vincolo anche se stai solo scaricando uno strumento temporaneo. In quel caso usa `pnpm dlx` (o il gestore pacchetti richiesto da quel progetto) invece di `npx`.
+
+### Se il progetto ha già uno `skills-lock.json`
+
+Nessun problema, non c'è conflitto: ogni skill è un'entry separata nel file, quindi puoi semplicemente lanciare di nuovo `skills add` come sopra — si aggiunge accanto alle skill già tracciate senza toccarle.
+
+C'è un caso diverso da conoscere: se hai clonato un progetto che **ha già `skills-lock.json`** ma le cartelle delle skill non ci sono (ad esempio perché non sono state committate), non serve rilanciare `add` ripetendo repo e agente per ognuna — basta ripristinarle tutte dal lockfile:
+
+```bash
+npx skills experimental_install
+# oppure con pnpm:
+pnpm dlx skills experimental_install
+```
+
+Legge `skills-lock.json`, riscarica ogni skill dalla fonte registrata e la reinstalla esattamente nel percorso in cui si trovava. Testato: funziona correttamente rimuovendo la cartella di una skill già tracciata e ripristinandola con questo comando.
 
 ## Aggiornamento
 
