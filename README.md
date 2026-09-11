@@ -12,6 +12,8 @@ Lo standard [agentskills.io](https://agentskills.io/specification) definisce il 
 |---|---|
 | VS Code / GitHub Copilot, molti altri client conformi allo standard | `.agents/skills/` |
 | Claude Code | `.claude/skills/` (locale al progetto) o `~/.claude/skills/` (personale, tutti i progetti) |
+| OpenCode | `.opencode/skills/` (progetto) o `~/.config/opencode/skills/` (globale) — legge anche `.agents/skills/` e `.claude/skills/` senza bisogno di copie extra |
+| Mistral AI Vibe | `.vibe/skills/` (progetto) o `~/.vibe/skills/` (globale) — legge anche `.agents/skills/` direttamente |
 
 Se il tuo client non trova la skill dopo l'installazione, per prima cosa controlla la sua directory di default nella documentazione del client.
 
@@ -56,10 +58,28 @@ Il meccanismo varia per client, ma in generale: riavvia/ricarica la sessione del
 
 ## Aggiornamento
 
-- Con submodule: `git submodule update --remote .agents/skills/code-comprehension-check`
-- Senza submodule: ripeti la copia dall'ultima versione taggata
-
 Le versioni sono taggate su Git (`vX.Y.Z`) e tracciate anche nel campo `metadata.version` del frontmatter di `SKILL.md`. Vedi `CHANGELOG.md` per la cronologia delle modifiche.
+
+### 1. Aggiornamento rapido via agente
+
+Stesso principio dell'installazione: incolla questo prompt e lascia che l'agente confronti la versione installata con l'ultima disponibile e la sostituisca se serve.
+
+```
+Aggiorna la Agent Skill "code-comprehension-check" installata in questo
+progetto all'ultima versione taggata del repository
+https://github.com/Samuel88/code-comprehension-check-skill: trova la
+directory in cui è installata (es. .agents/skills/code-comprehension-check
+o .claude/skills/code-comprehension-check), leggi il campo
+metadata.version nel suo SKILL.md, confrontalo con l'ultimo tag del
+repository remoto, e se è più vecchio sostituisci SKILL.md e la cartella
+references/ con quelli dell'ultimo tag. Poi dimmi da quale versione a
+quale hai aggiornato.
+```
+
+### 2. In alternativa: comandi manuali
+
+- Con submodule: `git submodule update --remote <directory-skill-del-client>/code-comprehension-check`
+- Senza submodule: ripeti la copia dall'ultima versione taggata (vedi comando `git clone --branch` sopra, sostituendo il tag con quello nuovo)
 
 ## Validazione
 
