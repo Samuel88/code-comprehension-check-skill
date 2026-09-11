@@ -17,9 +17,23 @@ Lo standard [agentskills.io](https://agentskills.io/specification) definisce il 
 
 Se il tuo client non trova la skill dopo l'installazione, per prima cosa controlla la sua directory di default nella documentazione del client.
 
-### 1. Installazione rapida via agente
+### 1. Installazione più rapida: `skills` CLI
 
-Se il tuo client AI ha accesso a shell/file system, il modo più semplice è incollargli questo prompt e lasciare che faccia tutto da solo:
+Se hai Node.js (npm, pnpm, ecc.) installato, il modo più rapido in assoluto è il [CLI `skills`](https://github.com/vercel-labs/skills) — un package manager per Agent Skills che usa GitHub come registry e rileva da solo la directory giusta per l'agente che indichi:
+
+```bash
+npx skills add Samuel88/code-comprehension-check-skill -a claude-code -y
+# equivalente con pnpm:
+pnpm dlx skills add Samuel88/code-comprehension-check-skill -a claude-code -y
+```
+
+Sostituisci `claude-code` con l'agente che usi (es. `opencode`), oppure ometti `-a` per una selezione interattiva tra i client rilevati. Testato con entrambi i comandi: clonano il repo, installano la skill nella directory corretta per l'agente scelto (es. `.claude/skills/code-comprehension-check/`) e creano un `skills-lock.json` nella root del progetto per tracciare la versione installata.
+
+⚠️ Il tool stesso lo ricorda a fine installazione: rivedi sempre il contenuto di una skill prima di usarla, perché viene eseguita con i permessi pieni del tuo agente.
+
+### 2. Installazione rapida via agente
+
+Se il tuo client AI ha accesso a shell/file system ma preferisci non installare un CLI aggiuntivo, incollagli questo prompt e lascia che faccia tutto da solo:
 
 ```
 Installa la Agent Skill "code-comprehension-check" dal repository
@@ -33,7 +47,7 @@ elenco di skill disponibili.
 
 Il prompt punta deliberatamente al tag `v1.0.0` (non a `main`) per un'installazione riproducibile, copia solo `SKILL.md` e `references/` (non `README.md`/`CHANGELOG.md`, che sono metadati del repo e non fanno parte della skill secondo la spec), e lascia che sia l'agente a determinare la propria directory di default invece di fissarla tu — varia da client a client (vedi punto 0).
 
-### 2. In alternativa: comandi manuali
+### 3. In alternativa: comandi manuali
 
 Il repo è pubblico su GitHub: https://github.com/Samuel88/code-comprehension-check-skill
 
@@ -52,7 +66,7 @@ cp -r /tmp/ccc/* <directory-skill-del-client>/code-comprehension-check/
 
 Sostituisci `<directory-skill-del-client>` con quella del punto 0 (es. `.agents/skills` oppure `.claude/skills`).
 
-### 3. Verifica che sia stata caricata
+### 4. Verifica che sia stata caricata
 
 Il meccanismo varia per client, ma in generale: riavvia/ricarica la sessione dell'agente (le skill vengono scoperte all'avvio) e controlla l'elenco delle skill disponibili — in VS Code/Copilot digita `/skills` in chat, in Claude Code la skill compare nell'elenco `<system-reminder>` delle skill disponibili o puoi chiedere direttamente "quali skill hai a disposizione?".
 
@@ -60,9 +74,21 @@ Il meccanismo varia per client, ma in generale: riavvia/ricarica la sessione del
 
 Le versioni sono taggate su Git (`vX.Y.Z`) e tracciate anche nel campo `metadata.version` del frontmatter di `SKILL.md`. Vedi `CHANGELOG.md` per la cronologia delle modifiche.
 
-### 1. Aggiornamento rapido via agente
+### 1. Aggiornamento più rapido: `skills` CLI
 
-Stesso principio dell'installazione: incolla questo prompt e lascia che l'agente confronti la versione installata con l'ultima disponibile e la sostituisca se serve.
+Se hai installato con il CLI `skills` (punto 1 dell'installazione), aggiornare è un solo comando, da eseguire nella cartella del progetto dove hai fatto l'installazione:
+
+```bash
+npx skills update
+# equivalente con pnpm:
+pnpm dlx skills update
+```
+
+Legge da solo `skills-lock.json` e riallinea tutte le skill installate all'ultima versione disponibile sul repository sorgente — nessun parametro da passare. Testato con entrambi i comandi.
+
+### 2. Aggiornamento rapido via agente
+
+Stesso principio: incolla questo prompt e lascia che l'agente confronti la versione installata con l'ultima disponibile e la sostituisca se serve.
 
 ```
 Aggiorna la Agent Skill "code-comprehension-check" installata in questo
@@ -76,7 +102,7 @@ references/ con quelli dell'ultimo tag. Poi dimmi da quale versione a
 quale hai aggiornato.
 ```
 
-### 2. In alternativa: comandi manuali
+### 3. In alternativa: comandi manuali
 
 - Con submodule: `git submodule update --remote <directory-skill-del-client>/code-comprehension-check`
 - Senza submodule: ripeti la copia dall'ultima versione taggata (vedi comando `git clone --branch` sopra, sostituendo il tag con quello nuovo)
