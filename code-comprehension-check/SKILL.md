@@ -1,7 +1,7 @@
 ---
 name: code-comprehension-check
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
 description: Interroga uno studente su una codebase reale (già scritta, non da lui necessariamente) per verificare se l'ha davvero capita, con domande mirate su file/funzioni/logica effettivamente presenti — non un quiz teorico generico. Usare ogni volta che l'utente chiede di essere "interrogato", "testato" o "verificato" sulla comprensione di un progetto/codice, chiede di fare da esaminatore/professore su una codebase, o dice cose come "fammi delle domande su questo codice", "controlla se ho capito questo progetto", "quizzami su questo repo". Legge prima la codebase e propone l'argomento individuato chiedendo conferma (o la scelta di un'area più specifica) insieme al livello di difficoltà, poi procede a domande socratiche una alla volta valutando ogni risposta su chiarezza, correttezza e profondità rispetto a una soglia minima legata alla difficoltà scelta, e chiude con un verdetto finale su cosa è stato capito bene e cosa no.
 ---
 
