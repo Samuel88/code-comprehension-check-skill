@@ -1,6 +1,6 @@
 # code-comprehension-check
 
-Agent Skill conforme allo standard [agentskills.io](https://agentskills.io/specification): interroga uno studente su una codebase reale con domande mirate a file/funzioni/logica effettivamente presenti, non un quiz teorico. Vedi `SKILL.md` per le istruzioni complete.
+Agent Skill conforme allo standard [agentskills.io](https://agentskills.io/specification): interroga uno studente su una codebase reale con domande mirate a file/funzioni/logica effettivamente presenti, non un quiz teorico. Vedi [`code-comprehension-check/SKILL.md`](code-comprehension-check/SKILL.md) per le istruzioni complete.
 
 ## Installazione
 
@@ -26,8 +26,8 @@ Le versioni sono taggate su Git (`vX.Y.Z`) e tracciate anche nel campo `metadata
 
 ## Validazione
 
-Prima di taggare una nuova release, verifica la conformità allo standard:
+Prima di taggare una nuova release, verifica la conformità allo standard con il validator ufficiale:
 
 ```bash
-skills-ref validate .
+npx skills-ref validate code-comprehension-check
 ```

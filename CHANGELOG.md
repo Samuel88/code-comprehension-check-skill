@@ -1,5 +1,9 @@
 # Changelog
 
+## Non rilasciato
+
+- Fix struttura repo: `SKILL.md` e `references/` spostati dalla radice del repo a una sottocartella `code-comprehension-check/`, come richiesto dalla spec (il nome della cartella contenente `SKILL.md` deve coincidere col campo `name`). La versione 1.0.0 pubblicata inizialmente non era conforme; verificato con `skills-ref validate`, il validator ufficiale.
+
 ## 1.0.0
 
 - Prima versione pubblicata.
